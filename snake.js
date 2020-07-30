@@ -28,12 +28,39 @@ function init() {
       this.cells.shift();
       var headX = this.cells[this.cells.length - 1].x;
       var headY = this.cells[this.cells.length - 1].y;
-      var X = headX + 1;
-      var Y = headY;
-      this.cells.push({ x: X, y: Y });
+      var nextX, nextY;
+      if (this.direction == "right") {
+        var nextX = headX + 1;
+        var nextY = headY;
+      } else if (this.direction == "left") {
+        var nextX = headX - 1;
+        var nextY = headY;
+      } else if (this.direction == "down") {
+        var nextX = headX;
+        var nextY = headY + 1;
+      } else {
+        var nextX = headX;
+        var nextY = headY - 1;
+      }
+      this.cells.push({ x: nextX, y: nextY });
     },
   };
   snake.createSnake();
+
+  function keyPressed(e) {
+    if (e.key == "ArrowRight") {
+      snake.direction = "right";
+    } else if (e.key == "ArrowLeft") {
+      snake.direction = "left";
+    } else if (e.key == "ArrowDown") {
+      snake.direction = "down";
+    } else {
+      snake.direction = "up";
+    }
+    console.log(snake.direction);
+  }
+
+  document.addEventListener("keydown", keyPressed);
 }
 
 function draw() {
